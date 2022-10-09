@@ -1,0 +1,40 @@
+CREATE database shop;
+CREATE TABLESPACE otus LOCATION '/var/lib/postgresql/data/otus';
+
+CREATE user user_otus with password 'otus';
+grant all privileges on database "shop" to user_otus;
+
+CREATE SCHEMA IF NOT EXISTS wine AUTHORIZATION user_otus;
+CREATE SCHEMA IF NOT EXISTS customer_order AUTHORIZATION user_otus;
+
+CREATE TABLE wine.importer (ID SERIAL primary key, companyName varchar(255) NOT NULL);
+CREATE TABLE wine.wineType (ID SERIAL primary key, typeName varchar(255) NOT NULL);
+CREATE TABLE wine.winery (ID SERIAL primary key, wineryName varchar(255) NOT NULL, country varchar(255) NOT NULL);
+CREATE TABLE wine.wine (
+    ID SERIAL primary key,
+    wineName varchar(255) NOT NULL,
+    price integer CHECK (price > 0),
+    importerId integer REFERENCES wine.importer(id),
+    wineryId integer REFERENCES wine.winery(id),
+    wineTypeId integer REFERENCES wine.wineType(id)
+);
+
+
+CREATE TABLE customer_order.customer (ID SERIAL primary key, customerName varchar(255) NOT NULL, email varchar(255) NOT NULL);
+CREATE TABLE customer_order.order (
+    ID SERIAL primary key,
+    orderNumber integer NOT NULL,
+    orderDate timestamp NOT NULL,
+    active boolean DEFAULT TRUE,
+    customerId integer REFERENCES customer_order.customer(id)
+);
+
+CREATE TABLE customer_order.orderItem (
+    ID SERIAL primary key,
+    quantity integer CHECK (quantity > 0),
+    orderId integer REFERENCES customer_order.order(id),
+    wineId integer REFERENCES wine.wine(id)
+);
+
+
+CREATE INDEX type ON wine.wineType(typeName);
