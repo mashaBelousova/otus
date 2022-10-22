@@ -47,7 +47,7 @@ VALUES('Cabernet Sauvignon'),
 
 ALTER TABLE wine.wine ADD year integer;
 
-CREATE TABLE wine.wineyear (ID SERIAL primary key, year integer NOT NULL, wine varchar(255) NOT NULL);
+CREATE TABLE wine.wineyear (id SERIAL primary key, year integer NOT NULL, wine varchar(255) NOT NULL);
 
 INSERT INTO wine.wineyear
 (year, wine)
