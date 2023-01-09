@@ -32,7 +32,10 @@
 - 
 ## 24. [DML: вставка, обновление, удаление, выборка данных](./24)
 - [queries](./24/queries.sql)
-- 
+
 ## 25. [Транзакции, MVCC, ACID](./25)
 - [transaction](./25/transaction.sql)
 - [csv](./25/csv.sql)
+
+## 26. [DML: агрегация и сортировка](./26)
+- [grouping](./26/grouping.sql)
